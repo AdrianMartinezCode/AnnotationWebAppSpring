@@ -26,7 +26,7 @@ The functioning of that app is:
      password : String
    }
 ```
-3. Show all annotation groups of the current user logged.
+3. (RESPONSE) Show all annotation groups of the current user logged.
 
    /api/annotationgroups  
    Is a response, the fields are:
@@ -40,7 +40,20 @@ The functioning of that app is:
      ]
    }
 ```
-4. (RESPONSE) Show all annotations of a annotation group.
+
+4. (REQUEST) Create an annotation group for the current user logged.
+
+   /api/annotationgroups  
+   Is a POST request, the fields are:
+```javascript
+   {
+     title : string,
+     color : String,
+     tags : [String, String, ...]
+   }
+```
+
+5. (RESPONSE) Show all annotations of a annotation group.
 
    /api/annotationgroups/{annotationGroupId}  
    Is a response, the fields are:
@@ -56,7 +69,7 @@ The functioning of that app is:
       ]
     }
    ```
-5. (REQUEST) Create a new annotation for actual annotation group.
+6. (REQUEST) Create a new annotation for actual annotation group.
 
    /api/annotationgroups/{annotationGroupId}  
    Is a POST request, the fields are:
