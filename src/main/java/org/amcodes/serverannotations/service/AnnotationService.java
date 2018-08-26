@@ -85,14 +85,14 @@ public class AnnotationService {
 		
 	}
 	
-	public AnnotationGroup createAnnotationGroup(CreateAnnotationGroupRequest req) {
+	public AnnotationGroup createAnnotationGroup(User user, CreateAnnotationGroupRequest req) {
 		AnnotationGroup ag = new AnnotationGroup();
 		
 		ag.setColor(req.getColor());
 		ag.setTitle(req.getTitle());
 		ag.setTags(req.getTags());
 		
-		ag.setUser(userRep.getOne(req.getUserId()));
+		ag.setUser(user);
 		
 		return ag;
 	}

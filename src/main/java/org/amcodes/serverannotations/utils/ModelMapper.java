@@ -22,6 +22,7 @@ public class ModelMapper {
 			ags.setTitle(annoGroup.getTitle());
 			return ags;
 		}).collect(Collectors.toSet());
+		uagr.setAnnotationGroups(annoGroups);
 		return uagr;
 	}
 	
@@ -37,6 +38,7 @@ public class ModelMapper {
 			as.setTitle(anno.getTitle());
 			return as;
 		}).collect(Collectors.toSet());
+		agr.setAnnotations(annos);
 		return agr;
 	}
 }

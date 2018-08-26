@@ -3,6 +3,7 @@ package org.amcodes.serverannotations.model;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,13 +26,14 @@ public class Annotation extends UserDateAudit {
 	@Size(max=1000)
 	private String text;
 	
-	@Column(name="color", columnDefinition = "String default #000000")
+	@NotBlank
 	private String color;
 	
 	@NotBlank
 	@Size(max=200)
 	private String title;
 	
+	@ElementCollection
 	private Set<String> tags;
 	
 	@ManyToOne

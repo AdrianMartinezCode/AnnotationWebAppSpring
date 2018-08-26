@@ -19,7 +19,7 @@ public class CreateAnnotationGroupRequest {
 	
 	private Set<String> tags;
 	
-	private Long userId;
+	//private Long userId;
 	
 	public String getTitle() {
 		return title;
@@ -45,13 +45,13 @@ public class CreateAnnotationGroupRequest {
 		this.tags = tags;
 	}
 
-	public Long getUserId() {
+	/*public Long getUserId() {
 		return userId;
 	}
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
-	}
+	}*/
 
 	
 }

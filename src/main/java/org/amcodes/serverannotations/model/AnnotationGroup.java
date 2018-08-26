@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,9 +38,10 @@ public class AnnotationGroup extends UserDateAudit {
 	@Size(max=200)
 	private String title;
 	
-	@Column(name="color", columnDefinition = "String default #000000")
+	@NotBlank
 	private String color;
 	
+	@ElementCollection
 	private Set<String> tags;
 	
 	@ManyToOne

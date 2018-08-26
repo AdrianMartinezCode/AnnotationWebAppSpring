@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(basePackages= {
 		"org.amcodes.serverannotations.config",
 		"org.amcodes.serverannotations.controller",
+		"org.amcodes.serverannotations.service",
 		"org.amcodes.serverannotations.exception",
 		"org.amcodes.serverannotations.payload",
 		//"org.amcodes.serverannotations.repository",

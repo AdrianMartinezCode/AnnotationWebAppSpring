@@ -15,13 +15,17 @@ import org.amcodes.serverannotations.payload.annotation.CreateAnnotationRequest;
 import org.amcodes.serverannotations.payload.annotationgroup.CreateAnnotationGroupRequest;
 import org.amcodes.serverannotations.payload.annotationgroup.UserAnnotationGroupsResponse;
 import org.amcodes.serverannotations.repository.AnnotationGroupRepository;
+import org.amcodes.serverannotations.repository.AnnotationRepository;
 import org.amcodes.serverannotations.repository.UserRepository;
 import org.amcodes.serverannotations.security.CurrentUser;
+import org.amcodes.serverannotations.security.UserPrincipal;
 import org.amcodes.serverannotations.service.AnnotationService;
 import org.amcodes.serverannotations.util.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +46,9 @@ public class AnnotationGroupController {
 	private AnnotationGroupRepository anGrRepository;
 	
 	@Autowired
+	private AnnotationRepository anRepository;
+	
+	@Autowired
 	private AnnotationService annServ;
 	
 	/*
@@ -52,17 +59,22 @@ public class AnnotationGroupController {
 	 */
 	@GetMapping
 	@PreAuthorize("hasRole('USER')")
-	public PagedResponse<UserAnnotationGroupsResponse> getAnnotationGroups(@CurrentUser User user,
+	public PagedResponse<UserAnnotationGroupsResponse> getAnnotationGroups(
 												 @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
 												 @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-		return annServ.getAnnotationGroupsByUser(user, page, size);
+		UserPrincipal usrp = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User usr = userRepository.getOne(usrp.getId());
+		return annServ.getAnnotationGroupsByUser(usr, page, size);
 	}
 	
 	
 	@PostMapping
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> createAnnotationGroup(@Valid @RequestBody CreateAnnotationGroupRequest cagReq) {
-		AnnotationGroup ag = annServ.createAnnotationGroup(cagReq);
+		UserPrincipal usrp = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User usr = userRepository.getOne(usrp.getId());
+		AnnotationGroup ag = annServ.createAnnotationGroup(usr, cagReq);
+		anGrRepository.save(ag);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{annotationGroupId}")
 				.buildAndExpand(ag.getId()).toUri();
@@ -84,6 +96,7 @@ public class AnnotationGroupController {
 	@PreAuthorize("hasRole('USER')")
 	public AnnotationGroupResponse createAnnotation(@Valid @RequestBody CreateAnnotationRequest caReq) {
 		Annotation a = annServ.createAnnotation(caReq);
+		anRepository.save(a);
 		/*URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{annotationGroupId}")
 				.buildAndExpand(a.getId()).toUri();
