@@ -1,7 +1,7 @@
 # AnnotationWebAppSpring
 An annotation system as web service in Spring.
 
-A lot of code has been extracted from the tutorial https://www.callicoder.com/spring-boot-spring-security-jwt-mysql-react-app-part-1/ for educational purposes.
+A lot of code has been extracted from the tutorial https://www.callicoder.com/spring-boot-spring-security-jwt-mysql-react-app-part-1/ for educational purposes and adapted for the purpose of the application.
 
 The app consists in, a user has annotation groups, and annotation groups has annotations. The annotation groups have a title, color and tags. The annotations have text, color, title and tags.
 
